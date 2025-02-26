@@ -97,10 +97,10 @@ make test
 ## 🛠 Development Roadmap
 
 ### **Phase 1: Language Specification & Design**
-- ✅ **Create Lexer** → Lexical Analyzer.
-- ✅ **Define Syntax & Grammar** → Establish rules for `.ouat` syntax.
-- ✅ **Create Keyword Dictionary** → Define supported verbs, nouns, and adjectives.
-- ✅ **Write Example `.ouat` Scripts** → Showcase valid scripts and edge cases.
+- ❌ **Create Lexer** → Lexical Analyzer.
+- ❌ **Define Syntax & Grammar** → Establish rules for `.ouat` syntax.
+- ❌ **Create Keyword Dictionary** → Define supported verbs, nouns, and adjectives.
+- ❌ **Write Example `.ouat` Scripts** → Showcase valid scripts and edge cases.
 - ❌ **Document Language Rules** → Create `docs/specs_ouat.md`.
 
 ### **Phase 2: Lexer Implementation**
