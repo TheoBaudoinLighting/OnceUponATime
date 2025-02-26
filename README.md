@@ -111,7 +111,7 @@ make test
 
 ### **Phase 3: Parser & AST Construction**
 - ❌ **Define Abstract Syntax Tree (AST) Structure** → Represent relationships between elements.
-- ❌ **Implement Recursive Descent Parser** → Convert tokens into structured AST.
+- ✅ **Implement Recursive Descent Parser** → Convert tokens into structured AST.
 - ❌ **Error Recovery in Parsing** → Handle incorrect or unexpected syntax.
 - ❌ **Unit Tests for Parser** → Ensure correct AST generation.
 
