@@ -14,43 +14,102 @@
 ---
 
 ## 📌 Example: Writing Code in `.ouat`
-### **Example Script (`example.ouat`)**
+### **Example Script (`dragon_tale.ouat`)**
 ```txt
+# Once Upon a Time (.ouat) script
+# Author: Theo Baudoin
+# Description: A simple story demonstrating the basic syntax and features
+# of the .ouat language, including subjects, verbs, adjectives and objects.
+
+# A tale of a knight and a dragon
+# Demonstrates features: conditions and character states
+
 Once upon a time.
-Inside a house of 10 meters, there was a golden chalice.
-The golden chalice shone brightly.
+
+A brave knight lived in a castle.
+The knight saw a fearsome dragon.
+
+The knight was uncertain if the dragon was friendly or hostile.
+
+If the dragon was friendly then
+    The knight and dragon became good friends.
+    They shared stories and tea every afternoon.
+Else if the dragon was not friendly then
+    The knight challenged the dragon to a duel.
+    The battle lasted three days and three nights.
+Else
+    The knight and dragon became enemies.
+    They fought for control of the castle.
+
+End.
+
 The story ends.
 ```
 
 ### **Generated C++ Code (`output/scene.cpp`)**
 ```cpp
+Parsed sentence structure:
+Condition: the dragon was friendly
+Then branch size: 2
+Else branch size: 3
+
+Entity states before code generation:
+Entity States:
+  dragon_is_hostile = false
+  dragon_is_friendly = true
+  dragon_is_or = true
+
+Generated code:
+----------------------------------------
 #include <iostream>
-#include <vector>
+#include <string>
+#include <map>
+#include <random>
+#include <ctime>
 
-class House {
-public:
-    float size;
-    std::vector<std::string> objects_inside;
-    House(float s) : size(s) {}
-    void addObject(std::string obj) { objects_inside.push_back(obj); }
-};
-
-class Chalice {
-public:
-    std::string color;
-    Chalice(std::string c) : color(c) {}
-    void shine() { std::cout << "The " << color << " chalice shines brightly!" << std::endl; }
-};
+// Function to generate a random boolean
+bool getRandomBool() {
+    return std::rand() % 2 == 0;
+}
 
 int main() {
-    House house(10);
-    Chalice chalice("golden");
-    house.addObject("golden chalice");
-    chalice.shine();
+    // Initialize the random number generator
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+
+    // Entity state declarations
+    bool dragon_is_hostile = false;
+    bool dragon_is_friendly = true;
+    bool dragon_is_or = true;
+
+    std::cout << "A brave knight lived in a castle" << std::endl;
+    std::cout << "The knight saw a fearsome dragon" << std::endl;
+    // Randomly determine the state of dragon
+    bool randomChoice = getRandomBool();
+    dragon_is_friendly = randomChoice;
+    dragon_is_hostile = !randomChoice;
+    std::cout << "The dragon was " << (randomChoice ? "friendly" : "hostile") << "." << std::endl;
+    if (dragon_is_friendly) {
+        std::cout << "The knight and dragon became good friends" << std::endl;
+        std::cout << "They shared stories and tea every afternoon" << std::endl;
+    } else {
+        if (!dragon_is_friendly) {
+            std::cout << "The knight challenged the dragon to a duel" << std::endl;
+            std::cout << "The battle lasted three days and three nights" << std::endl;
+        }
+        std::cout << "The knight and dragon became enemies" << std::endl;
+        std::cout << "They fought for control of the castle" << std::endl;
+    }
     return 0;
 }
 ```
-
+## And return 
+```
+A brave knight lived in a castle
+The knight saw a fearsome dragon
+The dragon was friendly.
+The knight and dragon became good friends
+They shared stories and tea every afternoon
+```
 ---
 
 ## 🛠️ Installation
@@ -97,21 +156,21 @@ make test
 ## 🛠 Development Roadmap
 
 ### **Phase 1: Language Specification & Design**
-- ❌ **Create Lexer** → Lexical Analyzer.
-- ❌ **Define Syntax & Grammar** → Establish rules for `.ouat` syntax.
-- ❌ **Create Keyword Dictionary** → Define supported verbs, nouns, and adjectives.
-- ❌ **Write Example `.ouat` Scripts** → Showcase valid scripts and edge cases.
-- ❌ **Document Language Rules** → Create `docs/specs_ouat.md`.
+- ✅ **Create Lexer** → Lexical Analyzer.
+- ✅ **Define Syntax & Grammar** → Establish rules for `.ouat` syntax.
+- ✅ **Create Keyword Dictionary** → Define supported verbs, nouns, and adjectives.
+- ✅ **Write Example `.ouat` Scripts** → Showcase valid scripts and edge cases.
+- ✅ **Document Language Rules** → Create `docs/specs_ouat.md`.
 
 ### **Phase 2: Lexer Implementation**
-- ❌ **Tokenization of `.ouat` Scripts** → Convert words into structured tokens.
-- ❌ **Regular Expressions for Syntax Matching** → Identify key tokens (objects, actions, properties).
+- ✅ **Tokenization of `.ouat` Scripts** → Convert words into structured tokens.
+- ✅ **Regular Expressions for Syntax Matching** → Identify key tokens (objects, actions, properties).
 - ❌ **Basic Error Handling in Tokenizer** → Detect invalid syntax early.
 - ❌ **Unit Tests for Tokenization** → Validate Lexer correctness.
 
 ### **Phase 3: Parser & AST Construction**
 - ❌ **Define Abstract Syntax Tree (AST) Structure** → Represent relationships between elements.
-- ❌ **Implement Recursive Descent Parser** → Convert tokens into structured AST.
+- ✅ **Implement Recursive Descent Parser** → Convert tokens into structured AST.
 - ❌ **Error Recovery in Parsing** → Handle incorrect or unexpected syntax.
 - ❌ **Unit Tests for Parser** → Ensure correct AST generation.
 
