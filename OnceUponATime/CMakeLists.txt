@@ -9,8 +9,9 @@ include_directories(examples)
 add_executable(OnceUponATime src/main.cpp
         src/lexer.cpp
         src/lexer.hpp
-        src/main.cpp
         src/parser.cpp
         src/parser.hpp
         include/token.hpp
+        src/code_generator.cpp
+        src/code_generator.hpp
 )
