@@ -46,7 +46,7 @@ End.
 The story ends.
 ```
 
-### **Generated C++ Code (`output/scene.cpp`)**
+### **Generated C++ Code (`output/generated.cpp / .exe`)**
 ```cpp
 Parsed sentence structure:
 Condition: the dragon was friendly
