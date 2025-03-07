@@ -1,130 +1,78 @@
-# OnceUponATime Compiler (`.ouat`)
+# OnceUponATime Compiler (.ouat) – Organic Narrative Programming
 
-## 📖 About the Project
-**OnceUponATime (OUAT)** is a narrative programming language where you code by telling a story. The `ouat_compiler` translates `.ouat` scripts into C++ code, compiles it, and runs it.
-
----
-
-## 🚀 Features
-- **Natural Language Syntax** → Code by writing a story.
-- **Automatic Class & Object Generation** → No need for manual struct/class declarations.
-- **Real-Time C++ Code Generation** → Outputs `.cpp` files.
-- **Compiles & Runs with `g++`** → Transforms `.ouat` files into executable programs.
+**OnceUponATime (OUAT)** is an innovative and immersive programming language that enables writing code through natural, poetic, and engaging storytelling. Each .ouat script is automatically transformed into modern C++ code, ready for direct compilation and execution using the g++ compiler.
 
 ---
 
-## 📌 Example: Writing Code in `.ouat`
-### **Example Script (`dragon_tale.ouat`)**
-```txt
-# Once Upon a Time (.ouat) script
-# Author: Theo Baudoin
-# Description: A simple story demonstrating the basic syntax and features
-# of the .ouat language, including subjects, verbs, adjectives and objects.
+## 🌟 About the Project
 
-# A tale of a knight and a dragon
-# Demonstrates features: conditions and character states
+OUAT revolutionizes programming by fully integrating narrative artistry with technical software development. By structuring algorithmic logic as stories, OUAT allows developers, writers, and artists to create programs that literally tell stories. Each element of the language is meticulously designed to provide an intuitive yet powerful experience, making coding accessible while maintaining impeccable technical precision.
 
-Once upon a time.
+The project aims to bridge the gap between literary arts and computer science, promoting mutual understanding and fostering multidisciplinary creativity.
 
-A brave knight lived in a castle.
-The knight saw a fearsome dragon.
-
-The knight was uncertain if the dragon was friendly or hostile.
-
-If the dragon was friendly then
-    The knight and dragon became good friends.
-    They shared stories and tea every afternoon.
-Else if the dragon was not friendly then
-    The knight challenged the dragon to a duel.
-    The battle lasted three days and three nights.
-Else
-    The knight and dragon became enemies.
-    They fought for control of the castle.
-
-End.
-
-The story ends.
-```
-
-### **Generated C++ Code (`output/generated.cpp / .exe`)**
-```cpp
-Parsed sentence structure:
-Condition: the dragon was friendly
-Then branch size: 2
-Else branch size: 3
-
-Entity states before code generation:
-Entity States:
-  dragon_is_hostile = false
-  dragon_is_friendly = true
-  dragon_is_or = true
-
-Generated code:
-----------------------------------------
-#include <iostream>
-#include <string>
-#include <map>
-#include <random>
-#include <ctime>
-
-// Function to generate a random boolean
-bool getRandomBool() {
-    return std::rand() % 2 == 0;
-}
-
-int main() {
-    // Initialize the random number generator
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-
-    // Entity state declarations
-    bool dragon_is_hostile = false;
-    bool dragon_is_friendly = true;
-    bool dragon_is_or = true;
-
-    std::cout << "A brave knight lived in a castle" << std::endl;
-    std::cout << "The knight saw a fearsome dragon" << std::endl;
-    // Randomly determine the state of dragon
-    bool randomChoice = getRandomBool();
-    dragon_is_friendly = randomChoice;
-    dragon_is_hostile = !randomChoice;
-    std::cout << "The dragon was " << (randomChoice ? "friendly" : "hostile") << "." << std::endl;
-    if (dragon_is_friendly) {
-        std::cout << "The knight and dragon became good friends" << std::endl;
-        std::cout << "They shared stories and tea every afternoon" << std::endl;
-    } else {
-        if (!dragon_is_friendly) {
-            std::cout << "The knight challenged the dragon to a duel" << std::endl;
-            std::cout << "The battle lasted three days and three nights" << std::endl;
-        }
-        std::cout << "The knight and dragon became enemies" << std::endl;
-        std::cout << "They fought for control of the castle" << std::endl;
-    }
-    return 0;
-}
-```
-## And return 
-```
-A brave knight lived in a castle
-The knight saw a fearsome dragon
-The dragon was friendly.
-The knight and dragon became good friends
-They shared stories and tea every afternoon
-```
 ---
 
-## 🛠️ Installation
-### **Prerequisites**
-- `g++` (GCC Compiler)
-- C++17 or later
+## 🚀 Key Features
 
-### **Cloning the Repository**
+- **Natural and Organic Syntax:** Write your programs as authentic and vibrant narratives.
+- **Automatic Compilation to C++:** Every OUAT script is instantly converted into clear, efficient, and compilable C++ code (compatible with C++17 and later).
+- **Conditional Instructions and Loops:** Intuitively handle conditions (`If ... then`, `else if`, `else`, `endif.`) and loops (`While`, `endwhile.`, `For each`, `do`, `endfor.`).
+- **Reusable Functions and Sub-narratives:** Clearly define and easily invoke narrative instruction blocks as functions.
+- **Integrated Organic Comments:** Naturally annotate your scripts with comments starting with `Remark:`, `Note:`, or `Comment:`, without affecting execution.
+- **User Interaction and Random Elements:** Easily incorporate interactive choices and random elements to enhance narrative experience.
+
+---
+
+## 📖 Complete Syntax and Keywords
+
+### Structure of a .ouat Script
+
+- **Mandatory Prologue:** `Once upon a time.`
+- **Narrative Body:** Each sentence corresponds to an instruction, declaration, condition, or loop, and must end with a period.
+- **Mandatory Epilogue:** `The story ends.`
+
+### Main Keywords
+
+**Flow Control:**
+- Conditions: `If`, `then`, `else if`, `else`, `endif.`
+- Loops: `While`, `endwhile.`, `For each`, `do`, `endfor.`
+
+**Functions:**
+- Declaration: `Define the function [name] as`, closed with `endfunction.`
+- Invocation: `call [name]`
+- Function return: `return`
+
+**Variables and Operations:**
+- Declaration and initialization: `has a`, `has`, direct assignment: `is`
+- Arithmetic operations: `add`, `subtract`, `multiply`, `divide`, equality check: `equals`
+
+**Interaction and Randomness:**
+- User interaction: `choose`, `input`
+- Randomization: `random`, `uncertain`, `fate leans`
+
+**Display and Immersive Narration:**
+- Simple display: `display`
+- Immersive narration: `narrate`
+- Alternative display: `tell`
+
+**Narrative Comments:**
+- Must begin with `Remark:`, `Note:`, or `Comment:` and end with a period.
+
+---
+
+## 🛠️ Detailed Installation
+
+### Prerequisites
+- g++ compiler (C++17 or later)
+- Build tool: CMake
+- Version control: Git
+
+### Complete Installation
+
+Clone and compile the project easily:
 ```sh
 git clone https://github.com/yourusername/OnceUponATime.git
 cd OnceUponATime
-```
-
-### **Building the Compiler**
-```sh
 mkdir build && cd build
 cmake ..
 make
@@ -132,13 +80,14 @@ make
 
 ---
 
-## 🎯 Usage
-### **Compiling a `.ouat` File**
+## 🎯 User Guide
+
+**Compiling a .ouat script:**
 ```sh
-./bin/ouat_compiler examples/example.ouat -o output/scene.cpp
+./bin/ouat_compiler examples/my_story.ouat -o output/scene.cpp
 ```
 
-### **Running the Generated Code**
+**Compiling & running the generated program:**
 ```sh
 g++ output/scene.cpp -o output/scene
 ./output/scene
@@ -146,14 +95,47 @@ g++ output/scene.cpp -o output/scene
 
 ---
 
-## 🧪 Running Tests
-```sh
-make test
+## 📚 Extended Example of a .ouat Script
+
+```txt
+Once upon a time.
+
+Remark: The adventure begins in the mysterious kingdom of Æther.
+The hero has a strength of 10 and magic is 5.
+The sky was vibrant with strange colors until the sudden appearance of a dragon.
+Fate was uncertain, and the hero's heart beat with heroic intensity.
+
+If the dragon awakens then
+    display "The dragon roars with mystical fury."
+    Define the function invokeShield as
+        display "A luminous shield protects the hero from imminent danger."
+        return
+    endfunction.
+    call invokeShield.
+else if the dragon is friendly then
+    display "A surprising alliance forms between the hero and the dragon, promising a new future."
+else
+    display "Conflict erupts violently, and dark shadows descend."
+    While magic is greater than 0
+        narrate "Sparks dance in the deep darkness."
+        Magic subtract 1 equals magic.
+    endwhile.
+endif.
+
+For each companion in the squad do
+    tell "A brave companion joins the legendary adventure."
+endfor.
+
+The hero choose "Which path should be followed now?".
+Random fate leans towards courage or caution.
+Commentary: End of the script.
+
+The story ends.
 ```
 
 ---
 
-## 🛠 Development Roadmap
+## 🚧 Development Roadmap
 
 ### **Phase 1: Language Specification & Design**
 - ✅ **Create Lexer** → Lexical Analyzer.
