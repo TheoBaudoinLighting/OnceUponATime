@@ -7,22 +7,7 @@
 # Demonstrates features: conditions and character states
 
 Once upon a time.
-
-A brave knight lived in a castle.
-The knight saw a fearsome dragon.
-
-The knight was uncertain if the dragon was friendly or hostile.
-
-If the dragon was friendly then
-    The knight and dragon became good friends.
-    They shared stories and tea every afternoon.
-Else if the dragon was not friendly then
-    The knight challenged the dragon to a duel.
-    The battle lasted three days and three nights.
-Else
-    The knight and dragon became enemies.
-    They fought for control of the castle.
-
-End.
-
+For each companion in squad do
+    tell "Hello".
+endfor.
 The story ends.

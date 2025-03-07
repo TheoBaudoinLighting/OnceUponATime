@@ -1,55 +1,61 @@
 // lexer.cpp
-
 #include "lexer.hpp"
 #include <cctype>
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
+#include <cassert>
+#include <unordered_map>
 
 const std::unordered_map<std::string, TokenType> Lexer::keywordMap = {
-    // Adjectives
+    {"once", TokenType::KW_ONCE},
+    {"upon", TokenType::KW_UPON},
+    {"a", TokenType::KW_A},
+    {"time", TokenType::KW_TIME},
     {"big", TokenType::ADJECTIVE},
-    {"new", TokenType::ADJECTIVE}, 
+    {"new", TokenType::ADJECTIVE},
     {"old", TokenType::ADJECTIVE},
     {"small", TokenType::ADJECTIVE},
-
-    // Keywords
-    {"a", TokenType::KW_A},
     {"by", TokenType::KW_BY},
     {"choose", TokenType::KW_CHOOSE},
     {"during", TokenType::KW_DURING},
     {"else", TokenType::KW_ELSE},
-    {"End", TokenType::KW_ENDIF},
+    {"end", TokenType::KW_END},
     {"if", TokenType::KW_IF},
     {"increased", TokenType::KW_INCREASED},
-    {"once", TokenType::KW_ONCE},
     {"otherwise", TokenType::KW_OTHERWISE},
     {"raised", TokenType::KW_INCREASED},
     {"random", TokenType::KW_RANDOM},
     {"randomly", TokenType::KW_RANDOM},
     {"result", TokenType::KW_TOTAL},
     {"then", TokenType::KW_THEN},
-    {"time", TokenType::KW_TIME},
     {"total", TokenType::KW_TOTAL},
     {"uncertain", TokenType::KW_UNCERTAIN},
-    {"upon", TokenType::KW_UPON},
     {"when", TokenType::KW_WHEN},
-    {"while", TokenType::KW_WHEN},
-
-    // Nouns
-    {"character", TokenType::NOUN},
-    {"object", TokenType::NOUN},
-    {"story", TokenType::NOUN},
-
-    // Verbs
-    {"add", TokenType::VERB},
-    {"display", TokenType::VERB},
-    {"go", TokenType::VERB},
-    {"knew", TokenType::VERB},
-    {"know", TokenType::VERB},
-    {"look", TokenType::VERB},
-    {"subtract", TokenType::VERB},
-    {"talk", TokenType::VERB}
+    {"while", TokenType::KW_WHILE},
+    {"endwhile", TokenType::KW_ENDWHILE},
+    {"for", TokenType::KW_FOR},
+    {"each", TokenType::KW_EACH},
+    {"do", TokenType::KW_DO},
+    {"endfor", TokenType::KW_ENDFOR},
+    {"define", TokenType::KW_DEFINE_FUNCTION},
+    {"endfunction", TokenType::KW_ENDFUNCTION},
+    {"call", TokenType::KW_CALL},
+    {"return", TokenType::KW_RETURN},
+    {"has", TokenType::KW_HAS},
+    {"is", TokenType::KW_IS},
+    {"add", TokenType::KW_ADD},
+    {"subtract", TokenType::KW_SUBTRACT},
+    {"multiply", TokenType::KW_MULTIPLY},
+    {"divide", TokenType::KW_DIVIDE},
+    {"equals", TokenType::KW_EQUALS},
+    {"input", TokenType::KW_INPUT},
+    {"narrate", TokenType::KW_NARRATE},
+    {"tell", TokenType::KW_TELL},
+    {"remark:", TokenType::KW_REMARK},
+    {"note:", TokenType::KW_NOTE},
+    {"comment:", TokenType::KW_COMMENT},
+    {"in", TokenType::KW_IN},
 };
 
 Lexer::Lexer(const std::string& source)
@@ -60,10 +66,12 @@ bool Lexer::isAtEnd() const {
 }
 
 char Lexer::peek() const {
+    assert(pos < source.size());
     return source[pos];
 }
 
 char Lexer::advance() {
+    assert(pos < source.size());
     char c = source[pos++];
     if (c == '\n') {
         ++line;
@@ -79,13 +87,9 @@ void Lexer::skipWhitespace() {
         char c = peek();
         if (std::isspace(c)) {
             advance();
-        }
-        else if (c == '#') {
+        } else if (c == '#') {
             advance();
             while (!isAtEnd() && peek() != '\n') {
-                advance();
-            }
-            if (!isAtEnd()) {
                 advance();
             }
         } else {
@@ -132,7 +136,7 @@ Token Lexer::readNumber() {
 
 Token Lexer::readString() {
     int startColumn = column;
-    advance(); 
+    advance();
     size_t start = pos;
     while (!isAtEnd() && peek() != '"') {
         if (peek() == '\\' && pos + 1 < source.size()) {
@@ -169,8 +173,6 @@ std::vector<Token> Lexer::tokenize() {
             advance();
             continue;
         }
-        if (current == '<') {
-        }
         if (std::isdigit(current)) {
             tokens.push_back(readNumber());
         } else if (std::isalpha(current) || static_cast<unsigned char>(current) > 127) {
@@ -180,6 +182,15 @@ std::vector<Token> Lexer::tokenize() {
             tokens.push_back(makeToken(TokenType::PERIOD, ".", tokenStartColumn));
         } else if (current == '"') {
             tokens.push_back(readString());
+        } else if (current == '[') {
+            advance();
+            tokens.push_back(makeToken(TokenType::LEFT_BRACKET, "[", tokenStartColumn));
+        } else if (current == ']') {
+            advance();
+            tokens.push_back(makeToken(TokenType::RIGHT_BRACKET, "]", tokenStartColumn));
+        } else if (current == ',') {  
+            advance();
+            tokens.push_back(makeToken(TokenType::COMMA, ",", tokenStartColumn));
         } else {
             std::ostringstream oss;
             oss << "Unexpected character '" << current << "' at line " << line << ", column " << column;

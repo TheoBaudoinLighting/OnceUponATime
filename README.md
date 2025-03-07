@@ -147,31 +147,31 @@ The story ends.
 ### **Phase 2: Lexer Implementation**
 - ✅ **Tokenization of `.ouat` Scripts** → Convert words into structured tokens.
 - ✅ **Regular Expressions for Syntax Matching** → Identify key tokens (objects, actions, properties).
-- ❌ **Basic Error Handling in Tokenizer** → Detect invalid syntax early.
-- ❌ **Unit Tests for Tokenization** → Validate Lexer correctness.
+- ✅ **Basic Error Handling in Tokenizer** → Detect invalid syntax early.
+- ✅ **Unit Tests for Tokenization** → Validate Lexer correctness.
 
 ### **Phase 3: Parser & AST Construction**
-- ❌ **Define Abstract Syntax Tree (AST) Structure** → Represent relationships between elements.
+- ✅ **Define Abstract Syntax Tree (AST) Structure** → Represent relationships between elements.
 - ✅ **Implement Recursive Descent Parser** → Convert tokens into structured AST.
 - ❌ **Error Recovery in Parsing** → Handle incorrect or unexpected syntax.
-- ❌ **Unit Tests for Parser** → Ensure correct AST generation.
+- ✅ **Unit Tests for Parser** → Ensure correct AST generation.
 
 ### **Phase 4: Code Generation**
-- ❌ **Map AST to C++ Code** → Convert high-level `.ouat` structures to compilable C++.
-- ❌ **Generate Classes & Functions Dynamically** → Infer class definitions from script.
-- ❌ **Optimize Generated Code** → Ensure efficiency in execution.
-- ❌ **Unit Tests for Code Generation** → Validate output correctness.
+- ✅ **Map AST to C++ Code** → Convert high-level `.ouat` structures to compilable C++.
+- ✅ **Generate Classes & Functions Dynamically** → Infer class definitions from script.
+- ✅ **Optimize Generated Code** → Ensure efficiency in execution.
+- ✅ **Unit Tests for Code Generation** → Validate output correctness.
 
 ### **Phase 5: Compiler Execution**
-- ❌ **Compile Generated C++ with `g++`** → Automate compilation step.
-- ❌ **Run Executable & Capture Output** → Ensure expected program behavior.
-- ❌ **Error Logging & Debug Messages** → Provide feedback on failures.
-- ❌ **Automate Compilation Process** → Single-command execution.
+- ✅ **Compile Generated C++ with `g++`** → Automate compilation step.
+- ✅ **Run Executable & Capture Output** → Ensure expected program behavior.
+- ✅ **Error Logging & Debug Messages** → Provide feedback on failures.
+- ✅ **Automate Compilation Process** → Single-command execution.
 
 ### **Phase 6: Advanced Features**
-- ❌ **Implement Conditional Logic (`if`, `else`)** → Enable branching behavior.
-- ❌ **Looping Constructs (`while`, `for`)** → Support iteration in `.ouat`.
-- ❌ **Function Definition & Invocation** → Allow reusable story segments.
+- ✅ **Implement Conditional Logic (`if`, `else`)** → Enable branching behavior.
+- ✅ **Looping Constructs (`while`, `for`)** → Support iteration in `.ouat`.
+- ✅ **Function Definition & Invocation** → Allow reusable story segments.
 - ❌ **Memory Management & Cleanup** → Prevent resource leaks in runtime.
 
 ### **Phase 7: Tooling & Debugging**

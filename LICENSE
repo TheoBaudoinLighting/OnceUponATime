@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2025 Theo Baudoin
+Copyright (c) 2025 Théo Baudoin-Malnoë
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+THIS SOFTWARE IS DISTRIBUTED WITHOUT ANY WARRANTY OF OPERATION. THE AUTHOR SHALL
+NOT BE HELD RESPONSIBLE FOR ANY PROBLEMS OR DAMAGES RESULTING FROM ITS USE.
+
+ADDITIONAL WARNINGS:
+
+1. NO PERFORMANCE WARRANTY: The author does not guarantee that the compiler will
+   operate at any particular speed or efficiency.
+
+2. NO COMPATIBILITY WARRANTY: The author does not guarantee compatibility with
+   specific operating systems, hardware, or software.
+
+3. NO SECURITY WARRANTY: The author does not guarantee that the software is
+   free from security vulnerabilities.
+
+4. NO MAINTENANCE WARRANTY: The author is not obligated to provide updates,
+   bug fixes, or technical support.
+
+5. NO ACCURACY WARRANTY: The author does not guarantee that the compiler will
+   produce correct or optimal code in all cases.
+
+6. LIMITATION OF LIABILITY: In no event shall the author be liable for any
+   direct, indirect, special, incidental, or consequential damages resulting
+   from the use or inability to use this software.
+
+THE USER ASSUMES FULL RESPONSIBILITY FOR THE RISKS ASSOCIATED WITH USING
+THIS SOFTWARE.

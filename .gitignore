@@ -31,5 +31,9 @@
 *.out
 *.app
 
+# Custom
+*.vscode
+*.idea
+
 # Build directory
 OnceUponATime/cmake-build-debug/*

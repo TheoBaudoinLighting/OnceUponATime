@@ -1,38 +1,38 @@
 // code_generator.hpp
-
 #ifndef CODE_GENERATOR_HPP
 #define CODE_GENERATOR_HPP
 
-#include <string>
-#include <vector>
+#include "ast.hpp"
 #include <sstream>
+#include <string>
 #include <set>
-#include <unordered_map>
-#include "parser.hpp"
 
-class CodeGenerator {
+class CodeGeneratorVisitor : public AST::Visitor {
 public:
-    CodeGenerator(const std::vector<Sentence>& sentences);
-    std::string generateCode() const;
-    
-    void debugPrintSentenceStructure(const Sentence& sentence, int level = 0) const;
-    void debugPrintEntityStates() const;
-
+    CodeGeneratorVisitor();
+    std::string getGeneratedCode() const;
+    void visit(AST::NarrativeStatement& node) override;
+    void visit(AST::ConditionalStatement& node) override;
+    void visit(AST::InteractiveStatement& node) override;
+    void visit(AST::RandomStatement& node) override;
+    void visit(AST::WhileStatement& node) override;
+    void visit(AST::ForEachStatement& node) override;
+    void visit(AST::FunctionDeclaration& node) override;
+    void visit(AST::FunctionCall& node) override;
+    void visit(AST::ReturnStatement& node) override;
+    void visit(AST::CommentStatement& node) override;
+    void visit(AST::Story& node) override;
+    void visit(AST::VariableDeclaration& node) override;
+    void visit(AST::VariableDeclarationBlock& node) override;
+    void visit(AST::TellStatement& node) override;
 private:
-    const std::vector<Sentence>& sentences;
-    std::set<std::string> entityNames;
-    mutable std::unordered_map<std::string, bool> entityStates;
-    
-    void analyzeEntities();
-    void analyzeCondition(const std::string& condition);
-    void generateCodeForSentence(std::ostringstream& oss, const Sentence& sentence, int indentLevel) const;
-    std::string translateCondition(const std::string& condition) const;
-    std::string normalizeIdentifier(const std::string& text) const;
-    std::string stripArticle(const std::string& text) const;
-    std::string toLower(const std::string& text) const;
-    std::string generateStatement(const Sentence& sentence) const;
-    void generateRandomizer(std::ostringstream& oss) const;
-    void handleRandomSentence(std::ostringstream& oss, const Sentence& sentence, int indentLevel) const;
+    std::ostringstream oss;
+    int indentLevel;
+    std::set<std::string> collectionsUsed;
+    std::string indent() const;
+    void generateRandomizer();
+    std::string sanitizeIdentifier(const std::string &s) const;
+    void collectCollections(AST::Node* node); 
 };
 
-#endif // CODE_GENERATOR_HPP
+#endif
