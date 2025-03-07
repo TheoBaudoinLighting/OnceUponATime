@@ -1,0 +1,24 @@
+# OnceUponATime (.ouat) script file
+# Author: Theo Baudoin
+# Description: This script demonstrates the basic syntax of the OnceUponATime language
+# which will be compiled into executable C++ code.
+
+# This script creates an array of characters and displays a message for each one
+# It demonstrates the use of data structures and loops
+
+# Start
+Once upon a time.
+
+# Defines an array named "Squad" containing three elements
+Squad has members ["Alice", "Bob", "Charlie"].
+
+# Uses a loop to iterate through each element in the array
+# For each "companion" in the "squad" array
+For each companion in squad do
+    # Displays "Hello" for each element in the array
+    # This will be translated to std::cout in the generated C++ code
+    Tell "Hello".
+endfor.
+
+# Marks the end of the script, mandatory for all .ouat scripts
+The story ends.
