@@ -1,10 +1,14 @@
 # OnceUponATime Compiler (.ouat) – Organic Narrative Programming
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Contributors](https://img.shields.io/github/contributors/TheoBaudoinLighting/OnceUponATime)](https://github.com/TheoBaudoinLighting/OnceUponATime/graphs/contributors)
+[![GitHub Stars](https://img.shields.io/github/stars/TheoBaudoinLighting/OnceUponATime?style=social)](https://github.com/TheoBaudoinLighting/OnceUponATime/stargazers)
+
 **OnceUponATime (OUAT)** is an innovative and immersive programming language that enables writing code through natural, poetic, and engaging storytelling. Each .ouat script is automatically transformed into modern C++ code, ready for direct compilation and execution using the g++ compiler.
 
 ---
 
-## 🌟 About the Project
+## About the Project
 
 OUAT revolutionizes programming by fully integrating narrative artistry with technical software development. By structuring algorithmic logic as stories, OUAT allows developers, writers, and artists to create programs that literally tell stories. Each element of the language is meticulously designed to provide an intuitive yet powerful experience, making coding accessible while maintaining impeccable technical precision.
 
@@ -12,7 +16,7 @@ The project aims to bridge the gap between literary arts and computer science, p
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 - **Natural and Organic Syntax:** Write your programs as authentic and vibrant narratives.
 - **Automatic Compilation to C++:** Every OUAT script is instantly converted into clear, efficient, and compilable C++ code (compatible with C++17 and later).
@@ -23,7 +27,7 @@ The project aims to bridge the gap between literary arts and computer science, p
 
 ---
 
-## 📖 Complete Syntax and Keywords
+## Complete Syntax and Keywords
 
 ### Structure of a .ouat Script
 
@@ -60,7 +64,7 @@ The project aims to bridge the gap between literary arts and computer science, p
 
 ---
 
-## 🛠️ Detailed Installation
+## Detailed Installation
 
 ### Prerequisites
 - g++ compiler (C++17 or later)
@@ -80,7 +84,7 @@ make
 
 ---
 
-## 🎯 User Guide
+## User Guide
 
 **Compiling a .ouat script:**
 ```sh
@@ -95,7 +99,7 @@ g++ output/scene.cpp -o output/scene
 
 ---
 
-## 📚 Extended Example of a .ouat Script
+## Extended Example of a .ouat Script
 
 ```txt
 Once upon a time.
@@ -135,7 +139,7 @@ The story ends.
 
 ---
 
-## 🚧 Development Roadmap
+## Development Roadmap
 
 ### **Phase 1: Language Specification & Design**
 - ✅ **Create Lexer** → Lexical Analyzer.
@@ -182,7 +186,7 @@ The story ends.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 Pull requests are welcome! Please check the `docs/specs_ouat.md` before contributing.
 
 ---
