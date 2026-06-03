@@ -1,18 +1,17 @@
-// main.cpp
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
 #include <filesystem>
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "code_generator.hpp"
+#include "lexer.h"
+#include "parser.h"
+#include "code_generator.h"
 
 int main() {
     try {
         std::filesystem::path currentPath = std::filesystem::current_path();
         std::cout << "Current directory: " << currentPath.string() << std::endl;
-        std::filesystem::path inputFilePath = currentPath / "../examples" / "dragon_tale.ouat";
+        std::filesystem::path inputFilePath = currentPath / "examples" / "hero_tale.ouat";
         if (!std::filesystem::exists(inputFilePath)) {
             std::cerr << "Error: Input file " << inputFilePath.string() << " does not exist." << std::endl;
             return EXIT_FAILURE;
@@ -52,7 +51,8 @@ int main() {
         outFile << generatedCode;
         outFile.close();
         std::cout << "Generated code written to " << outputFilePath.string() << std::endl;
-        std::string compileCommand = "g++ \"" + outputFilePath.string() + "\" -std=c++17 -o \"" + exePath.string() + "\"";
+
+        std::string compileCommand = "cl /EHsc /std:c++17 /Fe:\"" + exePath.string() + "\" \"" + outputFilePath.string() + "\"";
         std::cout << "Compilation command: " << compileCommand << std::endl;
         std::cout << "Compiling generated code..." << std::endl;
         if (system(compileCommand.c_str()) != 0) {
@@ -67,7 +67,8 @@ int main() {
             return EXIT_FAILURE;
         }
         std::cout << "Execution completed successfully." << std::endl;
-    } catch (const std::exception& ex) {
+    }
+    catch (const std::exception& ex) {
         std::cerr << "Error: " << ex.what() << std::endl;
         return EXIT_FAILURE;
     }

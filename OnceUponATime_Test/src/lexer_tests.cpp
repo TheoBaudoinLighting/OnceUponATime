@@ -1,8 +1,9 @@
 // lexer_tests.cpp
 
-#include <gtest/gtest.h>
-#include "../src/lexer.hpp"
-#include "../include/token.hpp"
+#include "pch.h"
+
+#include "lexer.h"
+#include "token.h"
 #include <string>
 #include <vector>
 
@@ -28,6 +29,15 @@ TEST(LexerTest, NumberTokenizationTest) {
     EXPECT_EQ(tokens[0].lexeme, "12345");
 }
 
+TEST(LexerTest, DecimalNumberTokenizationTest) {
+    std::string source = "3.14";
+    Lexer lexer(source);
+    auto tokens = lexer.tokenize();
+    ASSERT_GE(tokens.size(), 2);
+    EXPECT_EQ(tokens[0].type, TokenType::NUMBER);
+    EXPECT_EQ(tokens[0].lexeme, "3.14");
+}
+
 TEST(LexerTest, StringTokenizationTest) {
     std::string source = "\"Hello, world!\"";
     Lexer lexer(source);
@@ -44,4 +54,14 @@ TEST(LexerTest, IdentifierTokenizationTest) {
     ASSERT_GE(tokens.size(), 2);
     EXPECT_EQ(tokens[0].type, TokenType::IDENTIFIER);
     EXPECT_EQ(tokens[0].lexeme, "princess");
+}
+
+TEST(LexerTest, CommaIsSeparatePunctuationTest) {
+    std::string source = "Alice, Bob";
+    Lexer lexer(source);
+    auto tokens = lexer.tokenize();
+    ASSERT_GE(tokens.size(), 4);
+    EXPECT_EQ(tokens[0].type, TokenType::IDENTIFIER);
+    EXPECT_EQ(tokens[1].type, TokenType::COMMA);
+    EXPECT_EQ(tokens[2].type, TokenType::IDENTIFIER);
 }

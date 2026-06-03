@@ -54,6 +54,7 @@ enum class TokenType {
     KW_DIVIDE,
     KW_EQUALS,
     KW_INPUT,
+    KW_DISPLAY,
     KW_NARRATE,
     KW_TELL,
     KW_REMARK,
@@ -114,6 +115,7 @@ inline std::string tokenTypeToString(TokenType type) {
         case TokenType::KW_DIVIDE:          return "KW_DIVIDE";
         case TokenType::KW_EQUALS:          return "KW_EQUALS";
         case TokenType::KW_INPUT:           return "KW_INPUT";
+        case TokenType::KW_DISPLAY:         return "KW_DISPLAY";
         case TokenType::KW_NARRATE:         return "KW_NARRATE";
         case TokenType::KW_TELL:            return "KW_TELL";
         case TokenType::KW_REMARK:          return "KW_REMARK";

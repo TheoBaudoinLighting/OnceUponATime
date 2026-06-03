@@ -31,9 +31,27 @@
 *.out
 *.app
 
-# Custom
-*.vscode
-*.idea
+# IDE files
+.vscode/
+.idea/
+.vs/
+*.vcxproj.user
 
-# Build directory
-OnceUponATime/cmake-build-debug/*
+# Build directories and generated output
+build/
+packages/
+OnceUponATime/cmake-build-debug/
+OnceUponATime/intermediates/
+OnceUponATime/output/
+OnceUponATime/x64/
+OnceUponATime_Test/intermediates/
+OnceUponATime_Test/x64/
+
+# Visual Studio build artifacts
+*.idb
+*.ilk
+*.pdb
+*.tlog
+*.log
+*.recipe
+*.lastbuildstate

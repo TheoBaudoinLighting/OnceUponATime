@@ -1,0 +1,13 @@
+# OnceUponATime record image example
+# This uses a generic user-defined record, not a renderer-specific Vec3 primitive.
+
+Once upon a time.
+
+Define the record Vec3 with x number and y number and z number.
+The color is a Vec3 with x 1 and y 0.5 and z 0.25.
+
+Create image canvas with width 1 and height 1.
+Paint canvas at 0 0 with color x, color y, color z.
+Save image canvas to "output/record_color.ppm".
+
+The story ends.

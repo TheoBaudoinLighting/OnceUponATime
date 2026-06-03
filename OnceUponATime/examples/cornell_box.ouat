@@ -1,0 +1,43 @@
+# OnceUponATime Cornell box image example
+# This is a general raster program built from records and narrative image actions.
+# It is not a path-tracer-specific language feature.
+
+Once upon a time.
+
+The image has width of 160 and height is 160.
+
+Define the record Color with red number and green number and blue number.
+The back wall is a Color with red 0.72 and green 0.70 and blue 0.64.
+The left wall is a Color with red 0.78 and green 0.18 and blue 0.14.
+The right wall is a Color with red 0.16 and green 0.58 and blue 0.24.
+The floor color is a Color with red 0.76 and green 0.74 and blue 0.68.
+The ceiling color is a Color with red 0.68 and green 0.66 and blue 0.60.
+The box front is a Color with red 0.73 and green 0.70 and blue 0.62.
+The box side is a Color with red 0.55 and green 0.53 and blue 0.47.
+The box top is a Color with red 0.86 and green 0.84 and blue 0.76.
+The shadow color is a Color with red 0.28 and green 0.27 and blue 0.24.
+The light color is a Color with red 1 and green 0.94 and blue 0.72.
+
+Create image canvas with width image width and height image height.
+
+Fill image canvas with back wall.
+Paint rectangle on canvas from 0 0 to 32 160 with left wall.
+Paint rectangle on canvas from 128 0 to 160 160 with right wall.
+Paint rectangle on canvas from 0 0 to 160 30 with floor color.
+Paint rectangle on canvas from 0 132 to 160 160 with ceiling color.
+
+Paint rectangle on canvas from 78 24 to 136 42 with shadow color.
+Paint rectangle on canvas from 121 36 to 138 88 with box side.
+Paint rectangle on canvas from 90 31 to 122 88 with box front.
+Paint rectangle on canvas from 84 88 to 122 104 with box top.
+
+Paint rectangle on canvas from 38 22 to 98 36 with shadow color.
+Paint rectangle on canvas from 82 38 to 98 62 with box side.
+Paint rectangle on canvas from 43 29 to 83 62 with box front.
+Paint rectangle on canvas from 37 62 to 84 75 with box top.
+
+Paint rectangle on canvas from 68 146 to 92 154 with light color.
+
+Save image canvas to "output/cornell_box.ppm".
+
+The story ends.

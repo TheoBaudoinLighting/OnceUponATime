@@ -1,5 +1,5 @@
 // lexer.cpp
-#include "lexer.hpp"
+#include "lexer.h"
 #include <cctype>
 #include <sstream>
 #include <stdexcept>
@@ -21,6 +21,7 @@ const std::unordered_map<std::string, TokenType> Lexer::keywordMap = {
     {"during", TokenType::KW_DURING},
     {"else", TokenType::KW_ELSE},
     {"end", TokenType::KW_END},
+    {"endif", TokenType::KW_ENDIF},
     {"if", TokenType::KW_IF},
     {"increased", TokenType::KW_INCREASED},
     {"otherwise", TokenType::KW_OTHERWISE},
@@ -49,6 +50,7 @@ const std::unordered_map<std::string, TokenType> Lexer::keywordMap = {
     {"multiply", TokenType::KW_MULTIPLY},
     {"divide", TokenType::KW_DIVIDE},
     {"equals", TokenType::KW_EQUALS},
+    {"display", TokenType::KW_DISPLAY},
     {"input", TokenType::KW_INPUT},
     {"narrate", TokenType::KW_NARRATE},
     {"tell", TokenType::KW_TELL},
@@ -56,6 +58,7 @@ const std::unordered_map<std::string, TokenType> Lexer::keywordMap = {
     {"note:", TokenType::KW_NOTE},
     {"comment:", TokenType::KW_COMMENT},
     {"in", TokenType::KW_IN},
+    {"of", TokenType::KW_OF},
 };
 
 Lexer::Lexer(const std::string& source)
@@ -85,7 +88,7 @@ char Lexer::advance() {
 void Lexer::skipWhitespace() {
     while (!isAtEnd()) {
         char c = peek();
-        if (std::isspace(c)) {
+        if (std::isspace(static_cast<unsigned char>(c))) {
             advance();
         } else if (c == '#') {
             advance();
@@ -103,7 +106,8 @@ Token Lexer::makeToken(TokenType type, const std::string& lexeme, int tokenStart
 }
 
 static bool isWordChar(char c) {
-    return std::isalnum(c) || c == '_' || c == ',' || c == ';' || c == ':' || c == '?' || c == '!' || c == '-' || c == '\'';
+    unsigned char uc = static_cast<unsigned char>(c);
+    return std::isalnum(uc) || uc > 127 || c == '_' || c == ':' || c == '?' || c == '!' || c == '-' || c == '\'';
 }
 
 Token Lexer::readWord() {
@@ -116,7 +120,8 @@ Token Lexer::readWord() {
         word += advance();
     }
     std::string lower = word;
-    std::transform(lower.begin(), lower.end(), lower.begin(), ::tolower);
+    std::transform(lower.begin(), lower.end(), lower.begin(),
+                   [](unsigned char c) { return static_cast<char>(std::tolower(c)); });
     auto it = keywordMap.find(lower);
     if (it != keywordMap.end()) {
         return makeToken(it->second, word, startColumn);
@@ -127,8 +132,15 @@ Token Lexer::readWord() {
 Token Lexer::readNumber() {
     int startColumn = column;
     size_t start = pos;
-    while (!isAtEnd() && std::isdigit(peek())) {
+    while (!isAtEnd() && std::isdigit(static_cast<unsigned char>(peek()))) {
         advance();
+    }
+    if (!isAtEnd() && peek() == '.' && pos + 1 < source.size() &&
+        std::isdigit(static_cast<unsigned char>(source[pos + 1]))) {
+        advance();
+        while (!isAtEnd() && std::isdigit(static_cast<unsigned char>(peek()))) {
+            advance();
+        }
     }
     std::string number = source.substr(start, pos - start);
     return makeToken(TokenType::NUMBER, number, startColumn);
@@ -157,7 +169,7 @@ Token Lexer::readString() {
 std::string Lexer::peekAhead() const {
     size_t tempPos = pos;
     std::string result;
-    while (tempPos < source.size() && std::isalnum(source[tempPos])) {
+    while (tempPos < source.size() && std::isalnum(static_cast<unsigned char>(source[tempPos]))) {
         result += source[tempPos++];
     }
     return result;
@@ -173,9 +185,9 @@ std::vector<Token> Lexer::tokenize() {
             advance();
             continue;
         }
-        if (std::isdigit(current)) {
+        if (std::isdigit(static_cast<unsigned char>(current))) {
             tokens.push_back(readNumber());
-        } else if (std::isalpha(current) || static_cast<unsigned char>(current) > 127) {
+        } else if (std::isalpha(static_cast<unsigned char>(current)) || static_cast<unsigned char>(current) > 127) {
             tokens.push_back(readWord());
         } else if (current == '.') {
             advance();

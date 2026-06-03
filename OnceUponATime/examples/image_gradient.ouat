@@ -1,0 +1,19 @@
+# OnceUponATime image example
+# This is a general rendering-oriented program, not a path-tracer-specific feature.
+
+Once upon a time.
+
+The image has width of 8 and height is 8.
+Create image canvas with width image width and height image height.
+
+For each y from 0 to image height do
+    For each x from 0 to image width do
+        X divide image width equals red.
+        Y divide image height equals green.
+        Paint canvas at x y with red green 0.25.
+    endfor.
+endfor.
+
+Save image canvas to "output/gradient.ppm".
+
+The story ends.

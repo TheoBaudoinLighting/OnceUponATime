@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include "token.hpp"
+#include "token.h"
 
 class Lexer {
 public:

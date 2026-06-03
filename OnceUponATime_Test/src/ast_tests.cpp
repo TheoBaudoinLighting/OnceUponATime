@@ -1,7 +1,8 @@
 // ast_tests.cpp
 
-#include <gtest/gtest.h>
-#include "../src/ast.hpp"
+#include "pch.h"
+
+#include "ast.h"
 #include <sstream>
 #include <memory>
 #include <vector>
@@ -38,6 +39,11 @@ public:
         for (auto &stmt : node.body)
             stmt->accept(*this);
     }
+    void visit(AST::ForRangeStatement& node) override {
+        output << "ForRange: " << node.iterator << " from " << node.start << " to " << node.end << "\n";
+        for (auto &stmt : node.body)
+            stmt->accept(*this);
+    }
     void visit(AST::FunctionDeclaration& node) override {
         output << "FunctionDeclaration: " << node.name << "\n";
         for (auto &stmt : node.body)
@@ -64,6 +70,36 @@ public:
         output << "VariableDeclarationBlock:\n";
         for (auto &decl : node.declarations)
             decl->accept(*this);
+    }
+    void visit(AST::ArithmeticStatement& node) override {
+        output << "Arithmetic: " << node.left << " " << node.operation << " " << node.right
+               << " equals " << node.target << "\n";
+    }
+    void visit(AST::RecordDeclaration& node) override {
+        output << "RecordDeclaration: " << node.name << "\n";
+        for (const auto& field : node.fields)
+            output << "Field: " << field.first << " " << field.second << "\n";
+    }
+    void visit(AST::RecordInstanceDeclaration& node) override {
+        output << "RecordInstance: " << node.name << " " << node.typeName << "\n";
+        for (const auto& field : node.fieldValues)
+            output << "Value: " << field.first << " " << field.second << "\n";
+    }
+    void visit(AST::ImageDeclaration& node) override {
+        output << "ImageDeclaration: " << node.name << " " << node.width << " " << node.height << "\n";
+    }
+    void visit(AST::PixelWriteStatement& node) override {
+        output << "PixelWrite: " << node.imageName << " " << node.x << " " << node.y << "\n";
+    }
+    void visit(AST::ImageFillStatement& node) override {
+        output << "ImageFill: " << node.imageName << "\n";
+    }
+    void visit(AST::RectanglePaintStatement& node) override {
+        output << "RectanglePaint: " << node.imageName << " " << node.left << " " << node.bottom
+               << " " << node.right << " " << node.top << "\n";
+    }
+    void visit(AST::ImageSaveStatement& node) override {
+        output << "ImageSave: " << node.imageName << " " << node.outputPath << "\n";
     }
     void visit(AST::TellStatement& node) override {
         output << "Tell: " << node.message << "\n";
@@ -155,6 +191,19 @@ TEST(ASTTest, VariableDeclarationBlockTest) {
     EXPECT_NE(result.find("VariableDeclarationBlock:"), std::string::npos);
     EXPECT_NE(result.find("The hero strength 10"), std::string::npos);
     EXPECT_NE(result.find("The hero magic 5"), std::string::npos);
+}
+
+TEST(ASTTest, RecordDeclarationAndInstanceTest) {
+    AST::RecordDeclaration record("Vec3", {{"x", "number"}, {"y", "number"}, {"z", "number"}});
+    AST::RecordInstanceDeclaration instance("The color", "Vec3", {{"x", "1"}, {"y", "0.5"}, {"z", "0"}});
+    TestVisitor visitor;
+    record.accept(visitor);
+    instance.accept(visitor);
+    std::string result = visitor.output.str();
+    EXPECT_NE(result.find("RecordDeclaration: Vec3"), std::string::npos);
+    EXPECT_NE(result.find("Field: x number"), std::string::npos);
+    EXPECT_NE(result.find("RecordInstance: The color Vec3"), std::string::npos);
+    EXPECT_NE(result.find("Value: y 0.5"), std::string::npos);
 }
 
 TEST(ASTTest, TellStatementTest) {

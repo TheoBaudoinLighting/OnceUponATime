@@ -5,8 +5,8 @@
 #include <vector>
 #include <string>
 #include <memory>
-#include "token.hpp"
-#include "ast.hpp"
+#include "token.h"
+#include "ast.h"
 
 class Parser {
 public:
@@ -28,16 +28,26 @@ private:
     std::unique_ptr<AST::Statement> parseStatement();
     std::unique_ptr<AST::Statement> parseNarrativeStatement();
     std::unique_ptr<AST::Statement> parseConditionalStatement();
+    std::unique_ptr<AST::Statement> parseConditionalStatement(bool consumeEndMarker);
     std::unique_ptr<AST::Statement> parseInteractiveStatement();
     std::unique_ptr<AST::Statement> parseRandomStatement();
     std::unique_ptr<AST::Statement> parseWhileStatement();
     std::unique_ptr<AST::Statement> parseForEachStatement();
+    std::unique_ptr<AST::Statement> parseForRangeStatement();
     std::unique_ptr<AST::Statement> parseFunctionDeclaration();
     std::unique_ptr<AST::Statement> parseFunctionCall();
     std::unique_ptr<AST::Statement> parseReturnStatement();
     std::unique_ptr<AST::Statement> parseCommentStatement();
+    std::unique_ptr<AST::Statement> parseArithmeticStatement(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parseRecordDeclaration();
+    std::unique_ptr<AST::Statement> parseRecordInstanceDeclaration(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parseImageDeclaration(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parsePixelWriteStatement(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parseImageFillStatement(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parseRectanglePaintStatement(const std::vector<Token>& tokensInSentence);
+    std::unique_ptr<AST::Statement> parseImageSaveStatement(const std::vector<Token>& tokensInSentence);
     std::unique_ptr<AST::Statement> parseVariableDeclarationBlock(const std::vector<Token>& tokensInSentence);
-    std::unique_ptr<AST::Statement> parseTellStatement();
+    std::unique_ptr<AST::Statement> parseOutputStatement();
     std::vector<std::unique_ptr<AST::Statement>> parseBlock();
 };
 

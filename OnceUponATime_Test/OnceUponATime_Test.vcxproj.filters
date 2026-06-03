@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\ast_tests.cpp" />
+    <ClCompile Include="src\code_generator_tests.cpp" />
+    <ClCompile Include="src\compiler_tests.cpp" />
+    <ClCompile Include="src\integration_tests.cpp" />
+    <ClCompile Include="src\lexer_tests.cpp" />
+    <ClCompile Include="src\main_tests.cpp" />
+    <ClCompile Include="src\parser_tests.cpp" />
+    <ClCompile Include="src\token_tests.cpp" />
+    <ClCompile Include="..\OnceUponATime\src\ast.cpp" />
+    <ClCompile Include="..\OnceUponATime\src\code_generator.cpp" />
+    <ClCompile Include="..\OnceUponATime\src\lexer.cpp" />
+    <ClCompile Include="..\OnceUponATime\src\parser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\pch.h" />
+  </ItemGroup>
+</Project>

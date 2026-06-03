@@ -1,6 +1,6 @@
 // main_tests.cpp
 
-#include <gtest/gtest.h>
+#include "pch.h"
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);

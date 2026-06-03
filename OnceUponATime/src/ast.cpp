@@ -1,5 +1,5 @@
 // ast.cpp
-#include "ast.hpp"
+#include "ast.h"
 
 namespace AST {
 
@@ -27,6 +27,10 @@ void ForEachStatement::accept(Visitor& visitor) {
     visitor.visit(*this);
 }
 
+void ForRangeStatement::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
 void FunctionDeclaration::accept(Visitor& visitor) {
     visitor.visit(*this);
 }
@@ -48,6 +52,38 @@ void VariableDeclaration::accept(Visitor& visitor) {
 }
 
 void VariableDeclarationBlock::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void ArithmeticStatement::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void RecordDeclaration::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void RecordInstanceDeclaration::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void ImageDeclaration::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void PixelWriteStatement::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void ImageFillStatement::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void RectanglePaintStatement::accept(Visitor& visitor) {
+    visitor.visit(*this);
+}
+
+void ImageSaveStatement::accept(Visitor& visitor) {
     visitor.visit(*this);
 }
 

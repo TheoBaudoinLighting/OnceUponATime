@@ -1,10 +1,9 @@
 // compiler_tests.cpp
-
-#include "../src/lexer.hpp"
-#include "../src/parser.hpp"
-#include "../src/code_generator.hpp"
-#include "../src/ast.hpp"
-#include <gtest/gtest.h>
+#include "pch.h"
+#include "lexer.h"
+#include "parser.h"
+#include "code_generator.h"
+#include "ast.h"
 #include <memory>
 #include <string>
 #include <iostream>
@@ -44,7 +43,7 @@ TEST(CompilerTest, ConditionalCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("if (hero is brave)"), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"hero\") == \"brave\""), std::string::npos);
     EXPECT_NE(generated.find("The hero wins"), std::string::npos);
 }
 
@@ -61,7 +60,7 @@ TEST(CompilerTest, LoopCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("while (dragon is awake)"), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"dragon\") == \"awake\""), std::string::npos);
     EXPECT_NE(generated.find("Hero trembles"), std::string::npos);
 }
 
@@ -95,7 +94,7 @@ TEST(CompilerTest, VariableCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("int the_hero_strength = 10;"), std::string::npos);
+    EXPECT_NE(generated.find("int hero_strength = 10;"), std::string::npos);
 }
 
 TEST(CompilerTest, NestedWhileCompilationTest) {
@@ -113,8 +112,8 @@ TEST(CompilerTest, NestedWhileCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("while (dragon is awake)"), std::string::npos);
-    EXPECT_NE(generated.find("while (hero is brave)"), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"dragon\") == \"awake\""), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"hero\") == \"brave\""), std::string::npos);
     EXPECT_NE(generated.find("Hero fights"), std::string::npos);
 }
 
@@ -133,8 +132,8 @@ TEST(CompilerTest, NestedForEachCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("for (auto castle : kingdom)"), std::string::npos);
-    EXPECT_NE(generated.find("for (auto room : castle)"), std::string::npos);
+    EXPECT_NE(generated.find("for (const auto& castle : kingdom)"), std::string::npos);
+    EXPECT_NE(generated.find("for (const auto& room : castle)"), std::string::npos);
     EXPECT_NE(generated.find("Room is cleaned"), std::string::npos);
 }
 
@@ -153,8 +152,8 @@ TEST(CompilerTest, LoopWithConditionalCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("for (auto knight : round_table)"), std::string::npos);
-    EXPECT_NE(generated.find("if (knight is brave)"), std::string::npos);
+    EXPECT_NE(generated.find("for (const auto& knight : round_table)"), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"knight\") == \"brave\""), std::string::npos);
     EXPECT_NE(generated.find("Knight fights"), std::string::npos);
 }
 
@@ -173,7 +172,7 @@ TEST(CompilerTest, WhileMultipleStatementsCompilationTest) {
     CodeGeneratorVisitor codeGen;
     story->accept(codeGen);
     std::string generated = codeGen.getGeneratedCode();
-    EXPECT_NE(generated.find("while (dragon is awake)"), std::string::npos);
+    EXPECT_NE(generated.find("getStoryState(\"dragon\") == \"awake\""), std::string::npos);
     EXPECT_NE(generated.find("Hero trembles"), std::string::npos);
     EXPECT_NE(generated.find("Knight prepares"), std::string::npos);
     EXPECT_NE(generated.find("Wizard casts spell"), std::string::npos);

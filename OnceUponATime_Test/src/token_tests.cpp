@@ -1,7 +1,8 @@
 // token_tests.cpp
 
-#include <gtest/gtest.h>
-#include "../include/token.hpp"
+#include "pch.h"
+
+#include "token.h"
 #include <string>
 #include <vector>
 #include <map>

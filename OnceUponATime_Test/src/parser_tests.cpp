@@ -1,9 +1,10 @@
 // parser_tests.cpp
 
-#include <gtest/gtest.h>
-#include "../src/lexer.hpp"
-#include "../src/parser.hpp"
-#include "../src/ast.hpp"
+#include "pch.h"
+
+#include "lexer.h"
+#include "parser.h"
+#include "ast.h"
 #include <memory>
 #include <string>
 
@@ -81,6 +82,18 @@ TEST(ParserTest, ForEachStatementTest) {
     EXPECT_GE(forEach->body.size(), 1);
 }
 
+TEST(ParserTest, ForRangeStatementTest) {
+    std::string script = "Once upon a time. For each y from 0 to height do Tell \"row\". Endfor. The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    auto forRange = dynamic_cast<AST::ForRangeStatement*>(story->statements[0].get());
+    ASSERT_NE(forRange, nullptr);
+    EXPECT_EQ(forRange->iterator, "y");
+    EXPECT_EQ(forRange->start, "0");
+    EXPECT_EQ(forRange->end, "height");
+    EXPECT_EQ(forRange->body.size(), 1);
+}
+
 TEST(ParserTest, FunctionDeclarationTest) {
     std::string script = "Once upon a time. Define the function healHero as Hero recovers health. Endfunction. The story ends.";
     auto story = parseScript(script);
@@ -110,6 +123,133 @@ TEST(ParserTest, VariableDeclarationTest) {
     EXPECT_EQ(varBlock->declarations[0]->owner, "The hero");
     EXPECT_EQ(varBlock->declarations[0]->varName, "strength");
     EXPECT_EQ(varBlock->declarations[0]->value, "10");
+}
+
+TEST(ParserTest, ArithmeticStatementTest) {
+    std::string script = "Once upon a time. Magic subtract 1 equals magic. The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    auto arithmetic = dynamic_cast<AST::ArithmeticStatement*>(story->statements[0].get());
+    ASSERT_NE(arithmetic, nullptr);
+    EXPECT_EQ(arithmetic->left, "Magic");
+    EXPECT_EQ(arithmetic->operation, "subtract");
+    EXPECT_EQ(arithmetic->right, "1");
+    EXPECT_EQ(arithmetic->target, "magic");
+}
+
+TEST(ParserTest, RecordDeclarationAndInstanceTest) {
+    std::string script =
+        "Once upon a time. "
+        "Define the record Vec3 with x number and y number and z number. "
+        "The color is a Vec3 with x 1 and y 0.5 and z 0.25. "
+        "The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    ASSERT_EQ(story->statements.size(), 2);
+
+    auto record = dynamic_cast<AST::RecordDeclaration*>(story->statements[0].get());
+    ASSERT_NE(record, nullptr);
+    EXPECT_EQ(record->name, "Vec3");
+    ASSERT_EQ(record->fields.size(), 3);
+    EXPECT_EQ(record->fields[0].first, "x");
+    EXPECT_EQ(record->fields[0].second, "number");
+
+    auto instance = dynamic_cast<AST::RecordInstanceDeclaration*>(story->statements[1].get());
+    ASSERT_NE(instance, nullptr);
+    EXPECT_EQ(instance->name, "The color");
+    EXPECT_EQ(instance->typeName, "Vec3");
+    ASSERT_EQ(instance->fieldValues.size(), 3);
+    EXPECT_EQ(instance->fieldValues[1].first, "y");
+    EXPECT_EQ(instance->fieldValues[1].second, "0.5");
+}
+
+TEST(ParserTest, ImageStatementsTest) {
+    std::string script =
+        "Once upon a time. "
+        "Create image canvas with width image width and height image height. "
+        "Fill image canvas with back wall. "
+        "Paint rectangle on canvas from 0 0 to 4 4 with left wall. "
+        "Paint canvas at x y with color x, color y, color z. "
+        "Save image canvas to \"output/gradient.ppm\". "
+        "The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    ASSERT_EQ(story->statements.size(), 5);
+
+    auto imageDecl = dynamic_cast<AST::ImageDeclaration*>(story->statements[0].get());
+    ASSERT_NE(imageDecl, nullptr);
+    EXPECT_EQ(imageDecl->name, "canvas");
+    EXPECT_EQ(imageDecl->width, "image width");
+    EXPECT_EQ(imageDecl->height, "image height");
+
+    auto imageFill = dynamic_cast<AST::ImageFillStatement*>(story->statements[1].get());
+    ASSERT_NE(imageFill, nullptr);
+    EXPECT_EQ(imageFill->imageName, "canvas");
+    EXPECT_EQ(imageFill->red, "back wall red");
+    EXPECT_EQ(imageFill->green, "back wall green");
+    EXPECT_EQ(imageFill->blue, "back wall blue");
+
+    auto rectanglePaint = dynamic_cast<AST::RectanglePaintStatement*>(story->statements[2].get());
+    ASSERT_NE(rectanglePaint, nullptr);
+    EXPECT_EQ(rectanglePaint->imageName, "canvas");
+    EXPECT_EQ(rectanglePaint->left, "0");
+    EXPECT_EQ(rectanglePaint->bottom, "0");
+    EXPECT_EQ(rectanglePaint->right, "4");
+    EXPECT_EQ(rectanglePaint->top, "4");
+    EXPECT_EQ(rectanglePaint->red, "left wall red");
+
+    auto pixelWrite = dynamic_cast<AST::PixelWriteStatement*>(story->statements[3].get());
+    ASSERT_NE(pixelWrite, nullptr);
+    EXPECT_EQ(pixelWrite->imageName, "canvas");
+    EXPECT_EQ(pixelWrite->x, "x");
+    EXPECT_EQ(pixelWrite->y, "y");
+    EXPECT_EQ(pixelWrite->red, "color x");
+    EXPECT_EQ(pixelWrite->green, "color y");
+    EXPECT_EQ(pixelWrite->blue, "color z");
+
+    auto imageSave = dynamic_cast<AST::ImageSaveStatement*>(story->statements[4].get());
+    ASSERT_NE(imageSave, nullptr);
+    EXPECT_EQ(imageSave->imageName, "canvas");
+    EXPECT_EQ(imageSave->outputPath, "output/gradient.ppm");
+}
+
+TEST(ParserTest, CollectionDeclarationTest) {
+    std::string script = "Once upon a time. The hero has companions of [\"Alice\", \"Bob\", \"Charlie\"]. The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    auto varBlock = dynamic_cast<AST::VariableDeclarationBlock*>(story->statements[0].get());
+    ASSERT_NE(varBlock, nullptr);
+    ASSERT_EQ(varBlock->declarations.size(), 1);
+    EXPECT_EQ(varBlock->declarations[0]->owner, "The hero");
+    EXPECT_EQ(varBlock->declarations[0]->varName, "companions");
+    ASSERT_TRUE(varBlock->declarations[0]->isCollection());
+    EXPECT_EQ(varBlock->declarations[0]->values.size(), 3);
+    EXPECT_EQ(varBlock->declarations[0]->values[0], "Alice");
+}
+
+TEST(ParserTest, DisplayAndNarrateStatementsTest) {
+    std::string script = "Once upon a time. Display \"Hello\". Narrate \"A storm rises\". The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    ASSERT_EQ(story->statements.size(), 2);
+    auto display = dynamic_cast<AST::TellStatement*>(story->statements[0].get());
+    auto narrate = dynamic_cast<AST::TellStatement*>(story->statements[1].get());
+    ASSERT_NE(display, nullptr);
+    ASSERT_NE(narrate, nullptr);
+    EXPECT_EQ(display->message, "Hello");
+    EXPECT_EQ(narrate->message, "A storm rises");
+}
+
+TEST(ParserTest, ElseIfUsesSingleEndifTest) {
+    std::string script = "Once upon a time. If dragon is awake then Tell \"Careful\". Else if dragon is friendly then Tell \"Wave\". Endif. The story ends.";
+    auto story = parseScript(script);
+    ASSERT_NE(story, nullptr);
+    auto conditional = dynamic_cast<AST::ConditionalStatement*>(story->statements[0].get());
+    ASSERT_NE(conditional, nullptr);
+    ASSERT_EQ(conditional->elseBranch.size(), 1);
+    auto elseIf = dynamic_cast<AST::ConditionalStatement*>(conditional->elseBranch[0].get());
+    ASSERT_NE(elseIf, nullptr);
+    EXPECT_EQ(elseIf->condition, "dragon is friendly");
 }
 
 TEST(ParserTest, WhileStatementMultipleBodyTest) {
